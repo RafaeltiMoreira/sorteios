@@ -1,5 +1,6 @@
 {
   "name": "sorteio-ts",
+  "homepage": "https://rafaeltimoreira.github.io/sorteios/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
