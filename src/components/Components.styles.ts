@@ -29,6 +29,11 @@ export const FormContainer = styled.div`
   font-size: 1.125rem;
   font-weight: bold;
   flex-wrap: wrap;
+
+  @media (max-width: 576px) {
+    font-size: 0.75rem;
+    gap: 1rem;
+  }
 `;
 
 export const FormContainerJ = styled.div`
@@ -42,6 +47,11 @@ export const FormContainerJ = styled.div`
   font-weight: bold;
   flex-wrap: wrap;
   margin-bottom: 20px;
+
+  @media (max-width: 576px) {
+    font-size: 0.75rem;
+    gap: 1rem;
+  }
 `;
 
 export const Button = styled.button`
@@ -60,6 +70,11 @@ export const Button = styled.button`
   &:hover {
     background-color: ${( { theme } ) => theme["green-700"]};
     transition: background-color 0.2s;
+  }
+
+  @media (max-width: 576px) {
+    font-size: 0.875rem;
+    padding: 5px 10px;
   }
 `;
 
@@ -80,6 +95,11 @@ export const ButtonClean = styled.button`
     background-color: ${( { theme } ) => theme["blue-logo"]};
     transition: background-color 0.2s;
   }
+
+  @media (max-width: 576px) {
+    font-size: 0.875rem;
+    padding: 5px 10px;
+  }
 `;
 
 export const NumerosSorteados = styled.span`
@@ -93,6 +113,11 @@ export const NumerosSorteados = styled.span`
   width: 3rem;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 576px) {
+    font-size: 0.875rem;
+    width: 2.5rem;
+  }
 `;
 
 export const NumberInput = styled.input`
@@ -106,6 +131,10 @@ export const NumberInput = styled.input`
   border-bottom: 2px solid ${( { theme } ) => theme["gray-100"]};
   color: ${( { theme } ) => theme["yellow-logo"]};
 
+  &::-webkit-calendar-picker-indicator {
+    display: none !important;
+  }
+
   @media (max-width: 768px) {
     width: 3rem;
     font-size: 1rem;
@@ -118,7 +147,7 @@ export const NumberInput = styled.input`
     font-size: 0.875rem;
     padding: 0.5rem 0.25rem;
     height: 1.75rem;
-}
+  }
 `;
 
 export const HeaderH2 = styled.h2`
@@ -127,5 +156,5 @@ export const HeaderH2 = styled.h2`
     flex-direction: column;
     text-align: start;
     justify-content: center;
-    padding: 0 0 5rem 0;
+    padding: 1rem 0 5rem 0;
 `;

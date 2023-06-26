@@ -32,6 +32,23 @@ export const HeaderContainer = styled.header`
                 color: ${( { theme } ) => theme["yellow-logo"]};
                 border: 1px solid ${( { theme } ) => theme["yellow-logo"]};
             }
+
+            @media (max-width: 768px) {
+                font-size: 0.9rem;
+            }
+
+            @media (max-width: 480px) {
+                font-size: 0.8rem;
+            }
+
+            @media (max-width: 420px) {
+                font-size: 0.7rem;
+            }
+
+            @media (max-width: 360px) {
+                font-size: 0.5rem;
+            }
+
         }
 
         img {

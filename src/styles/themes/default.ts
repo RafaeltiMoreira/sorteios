@@ -23,20 +23,11 @@ export const defaultTheme = {
     'blue-logo': '#030380',
     'blue-hover': '#007bff',
 
+    'primaryColor': 'rgb(154, 65, 222)',
+    'secondaryColor': 'black',
+    'textColor': 'white',
+
 }
 
-export const lightTheme = {
-    body: '#FFF',
-    text: '#363537',
-    toggleBorder: '#FFF',
-    background: '#363537',
-}
-
-export const darkTheme = {
-    body: '#363537',
-    text: '#FAFAFA',
-    toggleBorder: '#6B8096',
-    background: '#999',
-}
 
 

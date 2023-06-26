@@ -53,7 +53,7 @@ export function Loto() {
         <FormContainerJ>
           <HeaderH2>Simulação Lotofácil</HeaderH2>
           <FormContainer>
-            <label htmlFor="numerosApostar">Quantidade de números (15 a 18):</label>
+            <label htmlFor="numerosApostar">Qtd de números (15 a 18):</label>
             <NumberInput
               type="number"
               id="numerosApostar"
@@ -64,7 +64,7 @@ export function Loto() {
             />
           </FormContainer>
           <FormContainer>
-            <label htmlFor="quantidadeJogos">Quantidade de jogos (1 a 5):</label>
+            <label htmlFor="quantidadeJogos">Qtd de jogos (1 a 5):</label>
             <NumberInput
               type="number"
               id="quantidadeJogos"

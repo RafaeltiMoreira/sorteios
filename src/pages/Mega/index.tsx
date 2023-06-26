@@ -53,7 +53,7 @@ export function Mega() {
         <FormContainerJ>
           <HeaderH2>Simulação Mega sena</HeaderH2>
           <FormContainer>
-            <label htmlFor="numerosApostar">Quantidade de números (6 a 15):</label>
+            <label htmlFor="numerosApostar">Qtd de números (6 a 15):</label>
             <NumberInput
               type="number"
               id="numerosApostar"
@@ -64,7 +64,7 @@ export function Mega() {
             />
           </FormContainer>
           <FormContainer>
-            <label htmlFor="quantidadeJogos">Quantidade de jogos (1 a 5):</label>
+            <label htmlFor="quantidadeJogos">Qtd de jogos (1 a 5):</label>
             <NumberInput
               type="number"
               id="quantidadeJogos"

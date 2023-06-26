@@ -4,12 +4,12 @@ import { HeaderContainer } from "./styles";
 import logoX from "../../assets/x-logo.png";
 
 export function Header() {
+
   return (
     <HeaderContainer>
       <NavLink to="/" title="Início">
         <div>
-
-        <img src={logoX} alt="Logo da letra X" />
+          <img src={logoX} alt="Logo da letra X" />
         </div>
       </NavLink>
 
@@ -29,7 +29,6 @@ export function Header() {
         <NavLink to="/quina">
           Quina
         </NavLink>
-
       </nav>
     </HeaderContainer>
   )
