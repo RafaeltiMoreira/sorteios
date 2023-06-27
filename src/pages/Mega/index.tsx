@@ -6,25 +6,32 @@ export function Mega() {
   const [apostas, setApostas] = useState<number[][]>( [] );
   const [numerosApostar, setNumerosApostar] = useState( 6 );
   const [quantidadeJogos, setQuantidadeJogos] = useState( 1 );
+  const [inputNumerosApostar, setInputNumerosApostar] = useState( numerosApostar.toString() );
+  const [inputQuantidadeJogos, setInputQuantidadeJogos] = useState( quantidadeJogos.toString() );
+  const [numerosApostarError, setNumerosApostarError] = useState( '' );
+  const [quantidadeJogosError, setQuantidadeJogosError] = useState( '' );
+  const [isButtonDisabled, setIsButtonDisabled] = useState( true );
 
   const gerarApostas = () => {
-    const allApostas: number[][] = [];
+    if ( !isButtonDisabled ) {
+      const allApostas: number[][] = [];
 
-    for ( let i = 0; i < quantidadeJogos; i++ ) {
-      const numeros: number[] = [];
+      for ( let i = 0; i < quantidadeJogos; i++ ) {
+        const numeros: number[] = [];
 
-      while ( numeros.length < numerosApostar ) {
-        const numero = Math.floor( Math.random() * 60 ) + 1;
+        while ( numeros.length < numerosApostar ) {
+          const numero = Math.floor( Math.random() * 60 ) + 1;
 
-        if ( !numeros.includes( numero ) ) {
-          numeros.push( numero );
+          if ( !numeros.includes( numero ) ) {
+            numeros.push( numero );
+          }
         }
+
+        allApostas.push( numeros );
       }
 
-      allApostas.push( numeros );
+      setApostas( allApostas );
     }
-
-    setApostas( allApostas );
   };
 
   const handleNumerosApostarChange = ( event: React.ChangeEvent<HTMLInputElement> ) => {
@@ -32,15 +39,29 @@ export function Mega() {
 
     if ( value >= 6 && value <= 15 ) {
       setNumerosApostar( value );
+      setInputNumerosApostar( event.target.value );
+      setNumerosApostarError( '' );
+    } else {
+      setInputNumerosApostar( event.target.value );
+      setNumerosApostarError( 'Digite um número entre 6 a 15' );
     }
+
+    setIsButtonDisabled( value < 6 || value > 15 || isNaN( value ) || quantidadeJogos < 1 || quantidadeJogos > 5 );
   };
 
   const handleQuantidadeJogosChange = ( event: React.ChangeEvent<HTMLInputElement> ) => {
     const value = parseInt( event.target.value );
 
     if ( value >= 1 && value <= 5 ) {
-      setQuantidadeJogos( value );
+      setQuantidadeJogos( value ); setInputQuantidadeJogos( event.target.value );
+      setQuantidadeJogosError( '' );
+    } else {
+      setInputQuantidadeJogos( event.target.value );
+      setQuantidadeJogosError( 'Digite um número entre 1 a 5' );
     }
+
+    setIsButtonDisabled( value < 1 || value > 5 || isNaN( value ) || numerosApostar < 6 || numerosApostar > 15 ||
+    isNaN(numerosApostar));
   };
 
   const limpar = () => {
@@ -59,9 +80,10 @@ export function Mega() {
               id="numerosApostar"
               min={6}
               max={15}
-              value={numerosApostar}
+              value={inputNumerosApostar}
               onChange={handleNumerosApostarChange}
             />
+            {numerosApostarError && <span style={{ color: 'red' }}>{numerosApostarError}</span>}
           </FormContainer>
           <FormContainer>
             <label htmlFor="quantidadeJogos">Qtd de jogos (1 a 5):</label>
@@ -70,11 +92,12 @@ export function Mega() {
               id="quantidadeJogos"
               min={1}
               max={5}
-              value={quantidadeJogos}
+              value={inputQuantidadeJogos}
               onChange={handleQuantidadeJogosChange}
             />
+            {quantidadeJogosError && <span style={{ color: 'red' }}>{quantidadeJogosError}</span>}
           </FormContainer>
-          <Button onClick={gerarApostas}><Play size={24} />Gerar números</Button>
+          <Button onClick={gerarApostas} disabled={isButtonDisabled}><Play size={24} />Gerar números</Button>
           <ButtonClean title='Limpar' onClick={limpar}><Broom size={24} /></ButtonClean>
         </FormContainerJ>
       </HomeForm>

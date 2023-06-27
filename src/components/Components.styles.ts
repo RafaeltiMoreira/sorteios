@@ -131,10 +131,6 @@ export const NumberInput = styled.input`
   border-bottom: 2px solid ${( { theme } ) => theme["gray-100"]};
   color: ${( { theme } ) => theme["yellow-logo"]};
 
-  &::-webkit-calendar-picker-indicator {
-    display: none !important;
-  }
-
   @media (max-width: 768px) {
     width: 3rem;
     font-size: 1rem;
