@@ -61,8 +61,8 @@ export function Loto() {
       setQuantidadeJogosError( 'Digite um número entre 1 a 5' );
     }
 
-    setIsButtonDisabled( value < 1 || value >= 5 || isNaN( value ) || numerosApostar < 15 || numerosApostar > 18 ||
-    isNaN(numerosApostar));
+    setIsButtonDisabled( (value < 1 || value > 5 || isNaN(value)) ||
+    (numerosApostar < 15 || numerosApostar > 18 || isNaN(numerosApostar)));
   };
 
   const limpar = () => {
