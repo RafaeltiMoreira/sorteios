@@ -60,7 +60,7 @@ export function Mega() {
       setQuantidadeJogosError( 'Digite um número entre 1 a 5' );
     }
 
-    setIsButtonDisabled( value < 1 || value > 5 || isNaN( value ) || numerosApostar < 6 || numerosApostar > 15 ||
+    setIsButtonDisabled( value < 1 || value >= 5 || isNaN( value ) || numerosApostar < 6 || numerosApostar > 15 ||
     isNaN(numerosApostar));
   };
 

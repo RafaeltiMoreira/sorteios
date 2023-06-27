@@ -61,7 +61,7 @@ export function Quina() {
       setQuantidadeJogosError( 'Digite um número entre 1 a 5' );
     }
 
-    setIsButtonDisabled( value < 1 || value > 5 || isNaN( value ) || numerosApostar < 5 || numerosApostar > 15 );
+    setIsButtonDisabled( value < 1 || value >= 5 || isNaN( value ) || numerosApostar < 5 || numerosApostar > 15 );
   };
 
   const limpar = () => {
