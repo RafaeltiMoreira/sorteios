@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Play, Broom } from '@phosphor-icons/react';
-import { Button, ButtonClean, NumerosSorteados, NumberInput, HomeContainer, HomeForm, FormContainer, FormContainerJ, HeaderH2 } from '../../components/Components.styles';
+import { Button, ButtonClean, NumerosSorteados, NumberInput, HomeContainer, HomeForm, FormContainer, FormContainerJ, HeaderH2, SpanAlert } from '../../components/Components.styles';
 
 export function Loto() {
   const [apostas, setApostas] = useState<number[][]>( [] );
@@ -12,13 +12,26 @@ export function Loto() {
   const [quantidadeJogosError, setQuantidadeJogosError] = useState( '' );
   const [isButtonDisabled, setIsButtonDisabled] = useState( true );
 
-  const gerarAposta = () => {
-    if ( !isButtonDisabled ) {
-      const allApostas: number[][] = [];
+  useEffect( () => {
+    setIsButtonDisabled(
+      numerosApostar < 15 ||
+      numerosApostar > 18 ||
+      isNaN( numerosApostar ) ||
+      quantidadeJogos < 1 ||
+      quantidadeJogos > 5 ||
+      isNaN( quantidadeJogos )
+    );
+  }, [numerosApostar, quantidadeJogos] );
 
-      for ( let i = 0; i < quantidadeJogos; i++ ) {
+  const gerarApostas = () => {
+    if ( numerosApostar >= 15 && numerosApostar <= 18 && quantidadeJogos >= 1 && quantidadeJogos <= 5 ) {
+      const allApostas: number[][] = [];
+      let jogosGerados = 0;
+
+      while ( jogosGerados < quantidadeJogos ) {
         const numeros: number[] = [];
 
+        // Preenche o restante dos números aleatórios
         while ( numeros.length < numerosApostar ) {
           const numero = Math.floor( Math.random() * 25 ) + 1;
 
@@ -27,7 +40,18 @@ export function Loto() {
           }
         }
 
-        allApostas.push( numeros );
+        // Verifica se o jogo já existe na lista
+        const jogoDuplicado = allApostas.some( ( aposta ) => {
+          return JSON.stringify( aposta ) === JSON.stringify( numeros.sort( ( a, b ) => a - b ) );
+        } );
+
+        // Se o jogo for duplicado, gera um novo jogo
+        if ( jogoDuplicado ) {
+          continue;
+        }
+
+        allApostas.push( numeros.sort( ( a, b ) => a - b ) );
+        jogosGerados++;
       }
 
       setApostas( allApostas );
@@ -43,10 +67,12 @@ export function Loto() {
       setNumerosApostarError( '' );
     } else {
       setInputNumerosApostar( event.target.value );
-      setNumerosApostarError( 'Digite um número entre 15 a 18' );
+      setNumerosApostarError( 'Digite um número entre 15 e 18' );
     }
 
-    setIsButtonDisabled( value < 15 || value > 18 || isNaN( value ) || quantidadeJogos < 1 || quantidadeJogos > 5 );
+    setIsButtonDisabled(
+      ( value < 15 || value > 18 || isNaN( value ) ) || ( quantidadeJogos < 1 || quantidadeJogos > 5 || isNaN( quantidadeJogos ) )
+    );
   };
 
   const handleQuantidadeJogosChange = ( event: React.ChangeEvent<HTMLInputElement> ) => {
@@ -58,11 +84,32 @@ export function Loto() {
       setQuantidadeJogosError( '' );
     } else {
       setInputQuantidadeJogos( event.target.value );
-      setQuantidadeJogosError( 'Digite um número entre 1 a 5' );
+      setQuantidadeJogosError( 'Digite um número entre 1 e 5' );
     }
 
-    setIsButtonDisabled( (value < 1 || value > 5 || isNaN(value)) ||
-    (numerosApostar < 15 || numerosApostar > 18 || isNaN(numerosApostar)));
+    setIsButtonDisabled(
+      ( numerosApostar < 15 || numerosApostar > 18 || isNaN( numerosApostar ) ) ||
+      ( value < 1 || value > 5 || isNaN( value ) ) ||
+      ( numerosApostarError !== '' || ( quantidadeJogosError !== '' && value === 1 ) )
+    );
+  };
+
+  const handleQuantidadeJogosKeyPress = ( event: React.KeyboardEvent<HTMLInputElement> ) => {
+    if ( event.key === 'Enter' ) {
+      event.preventDefault();
+      if ( !isButtonDisabled ) {
+        gerarApostas();
+      }
+    }
+  };
+
+  const handleNumerosApostarKeyPress = ( event: React.KeyboardEvent<HTMLInputElement> ) => {
+    if ( event.key === 'Enter' ) {
+      event.preventDefault();
+      if ( !isButtonDisabled ) {
+        gerarApostas();
+      }
+    }
   };
 
   const limpar = () => {
@@ -83,8 +130,9 @@ export function Loto() {
               max={18}
               value={inputNumerosApostar}
               onChange={handleNumerosApostarChange}
+              onKeyDown={handleNumerosApostarKeyPress}
             />
-            {numerosApostarError && <span style={{ color: 'red' }}>{numerosApostarError}</span>}
+            {numerosApostarError && <SpanAlert>{numerosApostarError}</SpanAlert>}
           </FormContainer>
           <FormContainer>
             <label htmlFor="quantidadeJogos">Qtd de jogos (1 a 5):</label>
@@ -95,10 +143,11 @@ export function Loto() {
               max={5}
               value={inputQuantidadeJogos}
               onChange={handleQuantidadeJogosChange}
+              onKeyDown={handleQuantidadeJogosKeyPress}
             />
-            {quantidadeJogosError && <span style={{ color: 'red' }}>{quantidadeJogosError}</span>}
+            {quantidadeJogosError && <SpanAlert>{quantidadeJogosError}</SpanAlert>}
           </FormContainer>
-          <Button onClick={gerarAposta} disabled={isButtonDisabled}><Play size={24} />Gerar números</Button>
+          <Button onClick={gerarApostas} disabled={isButtonDisabled}><Play size={24} />Gerar números</Button>
           <ButtonClean title='Limpar' onClick={limpar}><Broom size={24} /></ButtonClean>
         </FormContainerJ>
       </HomeForm>
@@ -108,8 +157,8 @@ export function Loto() {
           {apostas.map( ( aposta, index ) => (
             <FormContainer key={index}>
               <h3>Jogo {index + 1}:</h3>
-              {aposta.sort( ( a, b ) => a - b ).map( numero => (
-                <NumerosSorteados key={numero}>{numero}</NumerosSorteados>
+              {aposta.map( ( numero, subIndex ) => (
+                <NumerosSorteados key={subIndex}>{numero}</NumerosSorteados>
               ) )}
             </FormContainer>
           ) )}

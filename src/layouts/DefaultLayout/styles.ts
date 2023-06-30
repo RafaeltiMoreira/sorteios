@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const LayoutContainer = styled.div`
-    max-width: 75rem;
-    height: calc(100vh - 10rem);
+    max-width: 80rem;
+    height: calc(130vh - 10rem);
     margin: 4rem auto;
     padding: 1.5rem;
 
@@ -13,14 +13,11 @@ export const LayoutContainer = styled.div`
     display: flex;
     flex-direction: column;
 
-    @media (max-width: 576px) {
-        max-width: 24rem; 
-        height: auto;  
-    }
-
     @media (max-width: 768px) {
-        max-width: 45rem;
-        height: auto; 
+        max-width: 90%;
+        height: auto;
+        margin: 2rem auto;
+        padding: 1rem; 
     }
 `;
 

@@ -154,3 +154,8 @@ export const HeaderH2 = styled.h2`
     justify-content: center;
     padding: 1rem 0 5rem 0;
 `;
+
+export const SpanAlert = styled.span`
+    font-weight: bold;
+    color: ${( { theme } ) => theme["red"]};
+`;
