@@ -79,7 +79,7 @@ export const Button = styled.button`
 `;
 
 export const ButtonClean = styled.button`
-  background-color: ${( { theme } ) => theme["blue-hover"]};
+  background-color: ${( { theme } ) => theme["red-700"]};
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -92,7 +92,7 @@ export const ButtonClean = styled.button`
   gap: 0.5rem;
 
   &:hover {
-    background-color: ${( { theme } ) => theme["blue-logo"]};
+    background-color: ${( { theme } ) => theme["red-500"]};
     transition: background-color 0.2s;
   }
 

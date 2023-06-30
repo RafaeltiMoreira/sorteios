@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Play, Broom } from '@phosphor-icons/react';
-import { Button, ButtonClean, NumerosSorteados, NumberInput, HomeContainer, HomeForm, FormContainer, FormContainerJ, HeaderH2, SpanAlert } from '../../components/Components.styles';
+import { 
+  Button, 
+  ButtonClean, 
+  NumerosSorteados, 
+  NumberInput, 
+  HomeContainer, 
+  HomeForm, 
+  FormContainer, 
+  FormContainerJ, 
+  HeaderH2, 
+  SpanAlert 
+} from '../../components/Components.styles';
 
 export function Loto() {
   const [apostas, setApostas] = useState<number[][]>( [] );
@@ -11,20 +22,25 @@ export function Loto() {
   const [numerosApostarError, setNumerosApostarError] = useState( '' );
   const [quantidadeJogosError, setQuantidadeJogosError] = useState( '' );
   const [isButtonDisabled, setIsButtonDisabled] = useState( true );
+  const [isLoading, setIsLoading] = useState( false );
 
   useEffect( () => {
     setIsButtonDisabled(
-      numerosApostar < 15 ||
-      numerosApostar > 18 ||
-      isNaN( numerosApostar ) ||
-      quantidadeJogos < 1 ||
-      quantidadeJogos > 5 ||
-      isNaN( quantidadeJogos )
+      ( numerosApostar < 15 ||
+        numerosApostar > 18 ||
+        isNaN( numerosApostar ) ) ||
+      ( quantidadeJogos < 1 ||
+        quantidadeJogos > 5 ||
+        isNaN( quantidadeJogos ) )
     );
   }, [numerosApostar, quantidadeJogos] );
 
-  const gerarApostas = () => {
-    if ( numerosApostar >= 15 && numerosApostar <= 18 && quantidadeJogos >= 1 && quantidadeJogos <= 5 ) {
+  const gerarApostas = async () => {
+    if ( ( numerosApostar >= 15 && numerosApostar <= 18 ) && ( quantidadeJogos >= 1 && quantidadeJogos <= 5 ) ) {
+      setIsLoading( true );
+
+      // Aguarda um tempo simulado para simular o carregamento
+      await new Promise( ( resolve ) => setTimeout( resolve, 1500 ) );
       const allApostas: number[][] = [];
       let jogosGerados = 0;
 
@@ -55,6 +71,9 @@ export function Loto() {
       }
 
       setApostas( allApostas );
+      localStorage.setItem( 'apostas', JSON.stringify( allApostas ) );
+
+      setIsLoading( false );
     }
   };
 
@@ -114,7 +133,18 @@ export function Loto() {
 
   const limpar = () => {
     setApostas( [] );
+    setInputNumerosApostar( '' );
+    setInputQuantidadeJogos( '' );
+    setNumerosApostarError( '' );
+    setQuantidadeJogosError( '' );
+    setNumerosApostar( 15 );
+    setQuantidadeJogos( 1 );
   };
+
+  useEffect(() => {
+    setInputNumerosApostar(numerosApostar.toString());
+    setInputQuantidadeJogos(quantidadeJogos.toString());
+  }, [numerosApostar, quantidadeJogos]);
 
   return (
     <HomeContainer>
@@ -147,7 +177,7 @@ export function Loto() {
             />
             {quantidadeJogosError && <SpanAlert>{quantidadeJogosError}</SpanAlert>}
           </FormContainer>
-          <Button onClick={gerarApostas} disabled={isButtonDisabled}><Play size={24} />Gerar números</Button>
+          <Button onClick={gerarApostas} disabled={isButtonDisabled || isLoading}>{isLoading ? <span>Gerando...</span> : <><Play size={24} />Gerar números</>}</Button>
           <ButtonClean title='Limpar' onClick={limpar}><Broom size={24} /></ButtonClean>
         </FormContainerJ>
       </HomeForm>

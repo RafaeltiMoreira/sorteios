@@ -22,20 +22,25 @@ export function Mega() {
   const [numerosApostarError, setNumerosApostarError] = useState( '' );
   const [quantidadeJogosError, setQuantidadeJogosError] = useState( '' );
   const [isButtonDisabled, setIsButtonDisabled] = useState( true );
+  const [isLoading, setIsLoading] = useState( false );
 
   useEffect( () => {
     setIsButtonDisabled(
-      numerosApostar < 6 ||
+      (numerosApostar < 6 ||
       numerosApostar > 15 ||
-      isNaN( numerosApostar ) ||
-      quantidadeJogos < 1 ||
+      isNaN( numerosApostar )) ||
+      (quantidadeJogos < 1 ||
       quantidadeJogos > 5 ||
-      isNaN( quantidadeJogos )
+      isNaN( quantidadeJogos ))
     );
   }, [numerosApostar, quantidadeJogos] );
 
-  const gerarApostas = () => {
-    if (numerosApostar >= 6 && numerosApostar <= 15 && quantidadeJogos >= 1 && quantidadeJogos <= 5) {
+  const gerarApostas = async () => {
+    if ((numerosApostar >= 6 && numerosApostar <= 15) && (quantidadeJogos >= 1 && quantidadeJogos <= 5)) {
+      setIsLoading( true );
+
+      // Aguarda um tempo simulado para simular o carregamento
+      await new Promise( ( resolve ) => setTimeout( resolve, 1500 ) );
       const allApostas: number[][] = [];
       let jogosGerados = 0;
 
@@ -66,6 +71,9 @@ export function Mega() {
       }
 
       setApostas(allApostas);
+      localStorage.setItem( 'apostas', JSON.stringify( allApostas ) );
+
+      setIsLoading( false );
     }
   };
 
@@ -125,7 +133,18 @@ export function Mega() {
 
   const limpar = () => {
     setApostas( [] );
+    setInputNumerosApostar( '' );
+    setInputQuantidadeJogos( '' );
+    setNumerosApostarError( '' );
+    setQuantidadeJogosError( '' );
+    setNumerosApostar( 6 );
+    setQuantidadeJogos( 1 );
   };
+
+  useEffect(() => {
+    setInputNumerosApostar(numerosApostar.toString());
+    setInputQuantidadeJogos(quantidadeJogos.toString());
+  }, [numerosApostar, quantidadeJogos]);
 
   return (
     <HomeContainer>
@@ -158,9 +177,7 @@ export function Mega() {
             />
             {quantidadeJogosError && <SpanAlert>{quantidadeJogosError}</SpanAlert>}
           </FormContainer>
-          <Button onClick={gerarApostas} disabled={isButtonDisabled}>
-            <Play size={24} />
-            Gerar números
+          <Button onClick={gerarApostas} disabled={isButtonDisabled || isLoading}>{isLoading ? <span>Gerando...</span> : <><Play size={24} />Gerar números</>}
           </Button>
           <ButtonClean title="Limpar" onClick={limpar}>
             <Broom size={24} />
