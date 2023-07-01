@@ -15,6 +15,7 @@ export const LayoutContainer = styled.div`
 
     @media (max-width: 768px) {
         padding: 1rem;
+        height: auto;
     }
 
     @media (min-width: 768px) { 
