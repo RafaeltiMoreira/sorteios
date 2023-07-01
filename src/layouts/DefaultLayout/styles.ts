@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const LayoutContainer = styled.div`
     max-width: 90vw;
+    height: 120vh;
     margin: 4rem auto;
     padding: 1.5rem;
 
@@ -13,7 +14,11 @@ export const LayoutContainer = styled.div`
     flex-direction: column;
 
     @media (max-width: 768px) {
-        padding: 1rem; 
+        padding: 1rem;
+    }
+
+    @media (min-width: 768px) { 
+        height: none;
     }
 `;
 
