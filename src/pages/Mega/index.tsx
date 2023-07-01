@@ -21,111 +21,113 @@ export function Mega() {
   const [inputQuantidadeJogos, setInputQuantidadeJogos] = useState( quantidadeJogos.toString() );
   const [numerosApostarError, setNumerosApostarError] = useState( '' );
   const [quantidadeJogosError, setQuantidadeJogosError] = useState( '' );
-  const [isButtonDisabled, setIsButtonDisabled] = useState( true );
+  const [hideJogosButtons, setHideJogosButtons] = useState( false );
   const [isLoading, setIsLoading] = useState( false );
 
-  useEffect( () => {
-    setIsButtonDisabled(
-      (numerosApostar < 6 ||
-      numerosApostar > 15 ||
-      isNaN( numerosApostar )) ||
-      (quantidadeJogos < 1 ||
-      quantidadeJogos > 5 ||
-      isNaN( quantidadeJogos ))
-    );
-  }, [numerosApostar, quantidadeJogos] );
+  useEffect(() => {
+    const isNumerosApostarValid = numerosApostar >= 6 && numerosApostar <= 15;
+    const isQuantidadeJogosValid = quantidadeJogos >= 1 && quantidadeJogos <= 5;
+
+    setHideJogosButtons(!(isNumerosApostarValid && isQuantidadeJogosValid));
+  }, [numerosApostar, quantidadeJogos]);
 
   const gerarApostas = async () => {
-    if ((numerosApostar >= 6 && numerosApostar <= 15) && (quantidadeJogos >= 1 && quantidadeJogos <= 5)) {
+    if ( numerosApostar >= 6 && numerosApostar <= 15 && quantidadeJogos >= 1 && quantidadeJogos <= 5 ) {
       setIsLoading( true );
 
       // Aguarda um tempo simulado para simular o carregamento
-      await new Promise( ( resolve ) => setTimeout( resolve, 1500 ) );
+      await new Promise( ( resolve ) => setTimeout( resolve, 1300 ) );
       const allApostas: number[][] = [];
       let jogosGerados = 0;
 
-      while (jogosGerados < quantidadeJogos) {
+      while ( jogosGerados < quantidadeJogos ) {
         const numeros: number[] = [];
 
         // Preenche o restante dos números aleatórios
-        while (numeros.length < numerosApostar) {
-          const numero = Math.floor(Math.random() * 60) + 1;
+        while ( numeros.length < numerosApostar ) {
+          const numero = Math.floor( Math.random() * 60 ) + 1;
 
-          if (!numeros.includes(numero)) {
-            numeros.push(numero);
+          if ( !numeros.includes( numero ) ) {
+            numeros.push( numero );
           }
         }
 
         // Verifica se o jogo já existe na lista
-        const jogoDuplicado = allApostas.some((aposta) => {
-          return JSON.stringify(aposta) === JSON.stringify(numeros.sort((a, b) => a - b));
-        });
+        const jogoDuplicado = allApostas.some( ( aposta ) => {
+          return JSON.stringify( aposta ) === JSON.stringify( numeros.sort( ( a, b ) => a - b ) );
+        } );
 
         // Se o jogo for duplicado, gera um novo jogo
-        if (jogoDuplicado) {
+        if ( jogoDuplicado ) {
           continue;
         }
 
-        allApostas.push(numeros.sort((a, b) => a - b));
+        allApostas.push( numeros.sort( ( a, b ) => a - b ) );
         jogosGerados++;
       }
 
-      setApostas(allApostas);
+      setApostas( allApostas );
       localStorage.setItem( 'apostas', JSON.stringify( allApostas ) );
 
       setIsLoading( false );
     }
   };
 
-  const handleNumerosApostarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(event.target.value);
-  
-    if (value >= 6 && value <= 15) {
-      setNumerosApostar(value);
-      setInputNumerosApostar(event.target.value);
-      setNumerosApostarError('');
+  const handleNumerosApostarChange = ( event: React.ChangeEvent<HTMLInputElement> ) => {
+    const value = parseInt( event.target.value );
+
+    if ( value >= 6 && value <= 15 ) {
+      setNumerosApostar( value );
+      setInputNumerosApostar( event.target.value );
+      setNumerosApostarError( '' );
+      setHideJogosButtons( false ); // Mostra os botões novamente
     } else {
-      setInputNumerosApostar(event.target.value);
-      setNumerosApostarError('Digite um número entre 6 e 15');
+      setInputNumerosApostar( event.target.value );
+      setNumerosApostarError( 'Digite um número entre 6 e 15' );
+      setHideJogosButtons( true ); // Oculta os botões
+
+      // Limpa os números gerados
+      setApostas( [] );
+      localStorage.removeItem( 'apostas' );
     }
-  
-    setIsButtonDisabled(
-      (value < 6 || value > 15 || isNaN(value)) || (quantidadeJogos < 1 || quantidadeJogos > 5 || isNaN(quantidadeJogos))
-    );
-  };
-  
-  const handleQuantidadeJogosChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(event.target.value);
-  
-    if (value >= 1 && value <= 5) {
-      setQuantidadeJogos(value);
-      setInputQuantidadeJogos(event.target.value);
-      setQuantidadeJogosError('');
-    } else {
-      setInputQuantidadeJogos(event.target.value);
-      setQuantidadeJogosError('Digite um número entre 1 e 5');
-    }
-  
-    setIsButtonDisabled(
-      (numerosApostar < 6 || numerosApostar > 15 || isNaN(numerosApostar)) ||
-      (value < 1 || value > 5 || isNaN(value)) ||
-      (numerosApostarError !== '' || (quantidadeJogosError !== '' && value === 1))
-    );
+
+    setQuantidadeJogosError('');
   };
 
-  const handleQuantidadeJogosKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
+  const handleQuantidadeJogosChange = ( event: React.ChangeEvent<HTMLInputElement> ) => {
+    const value = parseInt( event.target.value );
+
+    if ( value >= 1 && value <= 5 ) {
+      setQuantidadeJogos( value );
+      setInputQuantidadeJogos( event.target.value );
+      setQuantidadeJogosError( '' );
+      setHideJogosButtons( false ); // Mostra os botões novamente
+    } else {
+      setInputQuantidadeJogos( event.target.value );
+      setQuantidadeJogosError( 'Digite um número entre 1 e 5' );
+      setHideJogosButtons( true ); // Oculta os botões
+
+      // Limpa os números gerados
+      setApostas( [] );
+      localStorage.removeItem( 'apostas' );
+    }
+
+    setNumerosApostarError('');
+  };
+
+  const handleQuantidadeJogosKeyPress = ( event: React.KeyboardEvent<HTMLInputElement> ) => {
+    if ( event.key === 'Enter' ) {
       event.preventDefault();
-      if (!isButtonDisabled) {
+      if ( !quantidadeJogos ) {
         gerarApostas();
       }
     }
   };
-  
-  const handleNumerosApostarKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
+
+  const handleNumerosApostarKeyPress = ( event: React.KeyboardEvent<HTMLInputElement> ) => {
+    if ( event.key === 'Enter' ) {
       event.preventDefault();
-      if (!isButtonDisabled) {
+      if ( !numerosApostar ) {
         gerarApostas();
       }
     }
@@ -135,16 +137,17 @@ export function Mega() {
     setApostas( [] );
     setInputNumerosApostar( '' );
     setInputQuantidadeJogos( '' );
-    setNumerosApostarError( '' );
-    setQuantidadeJogosError( '' );
     setNumerosApostar( 6 );
     setQuantidadeJogos( 1 );
+    setHideJogosButtons(false);
+    setNumerosApostarError(''); // Adicione esta linha para remover a mensagem de erro
+    setQuantidadeJogosError(''); // Adicione esta linha para remover a mensagem de erro
   };
 
-  useEffect(() => {
-    setInputNumerosApostar(numerosApostar.toString());
-    setInputQuantidadeJogos(quantidadeJogos.toString());
-  }, [numerosApostar, quantidadeJogos]);
+  useEffect( () => {
+    setInputNumerosApostar( numerosApostar.toString() );
+    setInputQuantidadeJogos( quantidadeJogos.toString() );
+  }, [numerosApostar, quantidadeJogos] );
 
   return (
     <HomeContainer>
@@ -162,7 +165,14 @@ export function Mega() {
               onChange={handleNumerosApostarChange}
               onKeyDown={handleNumerosApostarKeyPress}
             />
-            {numerosApostarError && <SpanAlert>{numerosApostarError}</SpanAlert>}
+            {inputNumerosApostar !== '' && (
+            <>
+              {numerosApostarError && <SpanAlert>{numerosApostarError}</SpanAlert>}
+              {!numerosApostarError && (parseInt(inputNumerosApostar) < 6 || parseInt(inputNumerosApostar) > 15) && (
+                <SpanAlert>Digite números entre 6 e 15</SpanAlert>
+              )}
+            </>
+          )}
           </FormContainer>
           <FormContainer>
             <label htmlFor="quantidadeJogos">Qtd de jogos (1 a 5):</label>
@@ -175,12 +185,28 @@ export function Mega() {
               onChange={handleQuantidadeJogosChange}
               onKeyDown={handleQuantidadeJogosKeyPress}
             />
-            {quantidadeJogosError && <SpanAlert>{quantidadeJogosError}</SpanAlert>}
+            {inputQuantidadeJogos !== '' && (
+            <>
+              {quantidadeJogosError && <SpanAlert>{quantidadeJogosError}</SpanAlert>}
+              {!quantidadeJogosError && (parseInt(inputQuantidadeJogos) < 1 || parseInt(inputQuantidadeJogos) > 5) && (
+                <SpanAlert>Digite números entre 1 e 5</SpanAlert>
+              )}
+            </>
+          )}
           </FormContainer>
-          <Button onClick={gerarApostas} disabled={isButtonDisabled || isLoading}>{isLoading ? <span>Gerando...</span> : <><Play size={24} />Gerar números</>}
+          <Button 
+            onClick={gerarApostas} 
+            disabled={isLoading}
+            className={hideJogosButtons ? 'hidden' : ''}
+          >
+            {isLoading ? <span>Gerando...</span> : <><Play size={20} />Gerar números</>}
           </Button>
-          <ButtonClean title="Limpar" onClick={limpar}>
-            <Broom size={24} />
+          <ButtonClean 
+            title="Limpar" 
+            onClick={limpar}
+            className={hideJogosButtons ? 'hidden' : ''}
+          >
+            <Broom size={20} />Apagar
           </ButtonClean>
         </FormContainerJ>
       </HomeForm>

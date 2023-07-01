@@ -34,19 +34,26 @@ export const HeaderContainer = styled.header`
             }
 
             @media (max-width: 768px) {
-                font-size: 0.9rem;
-            }
-
-            @media (max-width: 480px) {
                 font-size: 0.8rem;
             }
 
-            @media (max-width: 420px) {
-                font-size: 0.7rem;
+            @media (max-width: 480px) {
+                font-size: 0.6rem;
             }
 
-            @media (max-width: 360px) {
+            @media (max-width: 420px) {
                 font-size: 0.5rem;
+                height: 2rem;
+            }
+
+            @media (max-width: 381px) {
+                font-size: 0.48rem;
+                height: 1.5rem;
+            }
+
+            @media (max-width: 376px) {
+                font-size: 0.4rem;
+                height: 1.5rem;
             }
 
         }

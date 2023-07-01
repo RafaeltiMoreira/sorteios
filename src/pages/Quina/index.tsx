@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Play, Broom } from '@phosphor-icons/react';
-import { Button, ButtonClean, NumerosSorteados, NumberInput, HomeContainer, HomeForm, FormContainer, FormContainerJ, HeaderH2, SpanAlert } from '../../components/Components.styles';
+import { 
+  Button, 
+  ButtonClean, 
+  NumerosSorteados, 
+  NumberInput, 
+  HomeContainer, 
+  HomeForm, 
+  FormContainer, 
+  FormContainerJ, 
+  HeaderH2, 
+  SpanAlert 
+} from '../../components/Components.styles';
 
 export function Quina() {
   const [apostas, setApostas] = useState<number[][]>( [] );
@@ -10,26 +21,22 @@ export function Quina() {
   const [inputQuantidadeJogos, setInputQuantidadeJogos] = useState( quantidadeJogos.toString() );
   const [numerosApostarError, setNumerosApostarError] = useState( '' );
   const [quantidadeJogosError, setQuantidadeJogosError] = useState( '' );
-  const [isButtonDisabled, setIsButtonDisabled] = useState( true );
+  const [hideJogosButtons, setHideJogosButtons] = useState( false );
   const [isLoading, setIsLoading] = useState( false );
 
-  useEffect( () => {
-    setIsButtonDisabled(
-      ( numerosApostar < 5 ||
-        numerosApostar > 15 ||
-        isNaN( numerosApostar ) ) ||
-      ( quantidadeJogos < 1 ||
-        quantidadeJogos > 5 ||
-        isNaN( quantidadeJogos ) )
-    );
-  }, [numerosApostar, quantidadeJogos] );
+  useEffect(() => {
+    const isNumerosApostarValid = numerosApostar >= 5 && numerosApostar <= 15;
+    const isQuantidadeJogosValid = quantidadeJogos >= 1 && quantidadeJogos <= 5;
+
+    setHideJogosButtons(!(isNumerosApostarValid && isQuantidadeJogosValid));
+  }, [numerosApostar, quantidadeJogos]);
 
   const gerarApostas = async () => {
-    if ( ( numerosApostar >= 5 && numerosApostar <= 15 ) && ( quantidadeJogos >= 1 && quantidadeJogos <= 5 ) ) {
+    if ( numerosApostar >= 5 && numerosApostar <= 15 && quantidadeJogos >= 1 && quantidadeJogos <= 5 ) {
       setIsLoading( true );
 
       // Aguarda um tempo simulado para simular o carregamento
-      await new Promise( ( resolve ) => setTimeout( resolve, 1500 ) );
+      await new Promise( ( resolve ) => setTimeout( resolve, 1300 ) );
       const allApostas: number[][] = [];
       let jogosGerados = 0;
 
@@ -69,18 +76,22 @@ export function Quina() {
   const handleNumerosApostarChange = ( event: React.ChangeEvent<HTMLInputElement> ) => {
     const value = parseInt( event.target.value );
 
-    if ( value >= 6 && value <= 15 ) {
+    if ( value >= 5 && value <= 15 ) {
       setNumerosApostar( value );
       setInputNumerosApostar( event.target.value );
       setNumerosApostarError( '' );
+      setHideJogosButtons( false ); // Mostra os botões novamente
     } else {
       setInputNumerosApostar( event.target.value );
       setNumerosApostarError( 'Digite um número entre 5 e 15' );
+      setHideJogosButtons( true ); // Oculta os botões
+
+      // Limpa os números gerados
+      setApostas( [] );
+      localStorage.removeItem( 'apostas' );
     }
 
-    setIsButtonDisabled(
-      ( value < 5 || value > 15 || isNaN( value ) ) || ( quantidadeJogos < 1 || quantidadeJogos > 5 || isNaN( quantidadeJogos ) )
-    );
+    setQuantidadeJogosError('');
   };
 
   const handleQuantidadeJogosChange = ( event: React.ChangeEvent<HTMLInputElement> ) => {
@@ -90,22 +101,24 @@ export function Quina() {
       setQuantidadeJogos( value );
       setInputQuantidadeJogos( event.target.value );
       setQuantidadeJogosError( '' );
+      setHideJogosButtons( false ); // Mostra os botões novamente
     } else {
       setInputQuantidadeJogos( event.target.value );
       setQuantidadeJogosError( 'Digite um número entre 1 e 5' );
+      setHideJogosButtons( true ); // Oculta os botões
+
+      // Limpa os números gerados
+      setApostas( [] );
+      localStorage.removeItem( 'apostas' );
     }
 
-    setIsButtonDisabled(
-      ( numerosApostar < 5 || numerosApostar > 15 || isNaN( numerosApostar ) ) ||
-      ( value < 1 || value > 5 || isNaN( value ) ) ||
-      ( numerosApostarError !== '' || ( quantidadeJogosError !== '' && value === 1 ) )
-    );
+    setNumerosApostarError('');
   };
 
   const handleQuantidadeJogosKeyPress = ( event: React.KeyboardEvent<HTMLInputElement> ) => {
     if ( event.key === 'Enter' ) {
       event.preventDefault();
-      if ( !isButtonDisabled ) {
+      if ( !quantidadeJogos ) {
         gerarApostas();
       }
     }
@@ -114,7 +127,7 @@ export function Quina() {
   const handleNumerosApostarKeyPress = ( event: React.KeyboardEvent<HTMLInputElement> ) => {
     if ( event.key === 'Enter' ) {
       event.preventDefault();
-      if ( !isButtonDisabled ) {
+      if ( !numerosApostar ) {
         gerarApostas();
       }
     }
@@ -124,16 +137,17 @@ export function Quina() {
     setApostas( [] );
     setInputNumerosApostar( '' );
     setInputQuantidadeJogos( '' );
-    setNumerosApostarError( '' );
-    setQuantidadeJogosError( '' );
     setNumerosApostar( 5 );
     setQuantidadeJogos( 1 );
+    setHideJogosButtons(false);
+    setNumerosApostarError(''); // Adicione esta linha para remover a mensagem de erro
+    setQuantidadeJogosError(''); // Adicione esta linha para remover a mensagem de erro
   };
 
-  useEffect(() => {
-    setInputNumerosApostar(numerosApostar.toString());
-    setInputQuantidadeJogos(quantidadeJogos.toString());
-  }, [numerosApostar, quantidadeJogos]);
+  useEffect( () => {
+    setInputNumerosApostar( numerosApostar.toString() );
+    setInputQuantidadeJogos( quantidadeJogos.toString() );
+  }, [numerosApostar, quantidadeJogos] );
 
   return (
     <HomeContainer>
@@ -151,7 +165,14 @@ export function Quina() {
               onChange={handleNumerosApostarChange}
               onKeyDown={handleNumerosApostarKeyPress}
             />
-            {numerosApostarError && <SpanAlert>{numerosApostarError}</SpanAlert>}
+            {inputNumerosApostar !== '' && (
+            <>
+              {numerosApostarError && <SpanAlert>{numerosApostarError}</SpanAlert>}
+              {!numerosApostarError && (parseInt(inputNumerosApostar) < 5 || parseInt(inputNumerosApostar) > 15) && (
+                <SpanAlert>Digite números entre 5 e 15</SpanAlert>
+              )}
+            </>
+          )}
           </FormContainer>
           <FormContainer>
             <label htmlFor="quantidadeJogos">Qtd de jogos (1 a 5):</label>
@@ -164,10 +185,29 @@ export function Quina() {
               onChange={handleQuantidadeJogosChange}
               onKeyDown={handleQuantidadeJogosKeyPress}
             />
-            {quantidadeJogosError && <SpanAlert>{quantidadeJogosError}</SpanAlert>}
+            {inputQuantidadeJogos !== '' && (
+            <>
+              {quantidadeJogosError && <SpanAlert>{quantidadeJogosError}</SpanAlert>}
+              {!quantidadeJogosError && (parseInt(inputQuantidadeJogos) < 1 || parseInt(inputQuantidadeJogos) > 5) && (
+                <SpanAlert>Digite números entre 1 e 5</SpanAlert>
+              )}
+            </>
+          )}
           </FormContainer>
-          <Button onClick={gerarApostas} disabled={isButtonDisabled || isLoading}>{isLoading ? <span>Gerando...</span> : <><Play size={24} />Gerar números</>}</Button>
-          <ButtonClean title='Limpar' onClick={limpar}><Broom size={24} /></ButtonClean>
+          <Button 
+            onClick={gerarApostas} 
+            disabled={isLoading}
+            className={hideJogosButtons ? 'hidden' : ''}
+          >
+            {isLoading ? <span>Gerando...</span> : <><Play size={20} />Gerar números</>}
+          </Button>
+          <ButtonClean 
+            title='Limpar' 
+            onClick={limpar}
+            className={hideJogosButtons ? 'hidden' : ''}
+          >
+            <Broom size={20} />Apagar
+          </ButtonClean>
         </FormContainerJ>
       </HomeForm>
 

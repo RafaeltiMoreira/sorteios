@@ -14,6 +14,10 @@ export const HomeForm = styled.div`
   align-items: center;
   gap: 3.5rem;
 
+  .hidden {
+    display: none;
+  }
+
   h1 {
     color: ${( { theme } ) => theme["gray-100"]};
   }
@@ -55,7 +59,7 @@ export const FormContainerJ = styled.div`
 `;
 
 export const Button = styled.button`
-  background-color: ${( { theme } ) => theme["green-500"]};
+  background-color: ${( { theme } ) => theme["green-700"]};
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -68,7 +72,7 @@ export const Button = styled.button`
   gap: 0.5rem;
 
   &:hover {
-    background-color: ${( { theme } ) => theme["green-700"]};
+    background-color: ${( { theme } ) => theme["green-500"]};
     transition: background-color 0.2s;
   }
 
