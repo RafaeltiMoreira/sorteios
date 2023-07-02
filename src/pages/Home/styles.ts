@@ -22,6 +22,20 @@ export const HomeContainer = styled.main`
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 10px;
+        margin-top: 150px;
+        margin-bottom: 50px;
+
+        @media (max-width: 768px) { 
+            margin-top: 60px;
+            margin-bottom: 5px;
+        }
+    }
+
+    h3 {
+        margin-bottom: 100px;
+
+        @media (max-width: 768px) { 
+            margin-bottom: 30px;
+        }
     }
 `;
