@@ -179,6 +179,7 @@ Error generating stack: `+o.message+`
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
+  font-weight: bold;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -201,6 +202,7 @@ Error generating stack: `+o.message+`
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
+  font-weight: bold;
   display: inline-flex;
   align-items: center;
   justify-content: center;
