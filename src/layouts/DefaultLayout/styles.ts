@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 export const LayoutContainer = styled.div`
-    max-width: 90vw;
-    height: 120vh;
+    max-width: 80vw;
     margin: 4rem auto;
     padding: 1.5rem;
 
@@ -16,10 +15,6 @@ export const LayoutContainer = styled.div`
     @media (max-width: 768px) {
         padding: 1rem;
         height: auto;
-    }
-
-    @media (min-width: 768px) { 
-        height: none;
     }
 `;
 

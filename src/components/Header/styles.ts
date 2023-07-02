@@ -9,6 +9,14 @@ export const HeaderContainer = styled.header`
         display: flex;
         gap: 0.5rem;
 
+        @media (max-width: 768px) {
+            gap: 0.3rem;
+        }
+
+        @media (max-width: 376px) {
+            gap: 0.2rem;
+        }
+
         a {
             height: 3rem;
             display: flex;
@@ -35,24 +43,20 @@ export const HeaderContainer = styled.header`
 
             @media (max-width: 768px) {
                 font-size: 0.8rem;
+                padding: 0 0.4rem;
             }
 
             @media (max-width: 480px) {
                 font-size: 0.6rem;
-            }
-
-            @media (max-width: 420px) {
-                font-size: 0.5rem;
                 height: 2rem;
             }
 
             @media (max-width: 381px) {
-                font-size: 0.48rem;
-                height: 1.5rem;
+                padding: 0 0.3rem;
             }
 
             @media (max-width: 376px) {
-                font-size: 0.4rem;
+                font-size: 0.5rem;
                 height: 1.5rem;
             }
 

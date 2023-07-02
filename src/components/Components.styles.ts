@@ -2,10 +2,28 @@ import styled from "styled-components";
 
 export const HomeContainer = styled.main`
   flex: 1;
+  padding: 3.5rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+
+  @media (max-width: 768px) {
+    padding: 2.5rem;
+  }
+
+  @media (max-width: 576px) {
+    padding: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    color: ${( { theme } ) => theme["gray-100"]};
+    margin-bottom: 120px;
+
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+    }
+  }
+
 `;
 
 export const HomeForm = styled.div`
@@ -36,7 +54,6 @@ export const FormContainer = styled.div`
 
   @media (max-width: 576px) {
     font-size: 0.75rem;
-    gap: 1rem;
   }
 `;
 
@@ -124,6 +141,11 @@ export const NumerosSorteados = styled.span`
     font-size: 0.875rem;
     width: 2.5rem;
   }
+
+  @media (max-width: 392px) {
+    font-size: 0.8rem;
+    width: 2rem;
+  }
 `;
 
 export const NumberInput = styled.input`
@@ -150,15 +172,6 @@ export const NumberInput = styled.input`
     padding: 0.5rem 0.25rem;
     height: 1.75rem;
   }
-`;
-
-export const HeaderH2 = styled.h2`
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    text-align: start;
-    justify-content: center;
-    padding: 1rem 0 5rem 0;
 `;
 
 export const SpanAlert = styled.span`
