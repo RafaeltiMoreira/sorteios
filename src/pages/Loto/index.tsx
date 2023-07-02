@@ -27,7 +27,7 @@ export function Loto() {
   const [isLoading, setIsLoading] = useState( false );
 
   useEffect(() => {
-    const isNumerosApostarValid = numerosApostar >= 5 && numerosApostar <= 15;
+    const isNumerosApostarValid = numerosApostar >= 15 && numerosApostar <= 18;
     const isQuantidadeJogosValid = quantidadeJogos >= 1 && quantidadeJogos <= 5;
 
     setHideJogosButtons(!(isNumerosApostarValid && isQuantidadeJogosValid));
