@@ -22,6 +22,8 @@ export function Loto() {
   const [numerosApostarError, setNumerosApostarError] = useState( '' );
   const [quantidadeJogosError, setQuantidadeJogosError] = useState( '' );
   const [hideJogosButtons, setHideJogosButtons] = useState( false );
+  const [hasNumerosGerados, setHasNumerosGerados] = useState(false); // Novo estado para controlar a visibilidade do botão
+  const [isInputsEmpty, setIsInputsEmpty] = useState(true);
   const [isLoading, setIsLoading] = useState( false );
 
   useEffect(() => {
@@ -30,6 +32,17 @@ export function Loto() {
 
     setHideJogosButtons(!(isNumerosApostarValid && isQuantidadeJogosValid));
   }, [numerosApostar, quantidadeJogos]);
+
+  useEffect(() => {
+    setHasNumerosGerados(apostas.length > 0); // Atualiza o estado hasNumerosGerados
+  }, [apostas]);
+
+  useEffect(() => {
+    setIsInputsEmpty(
+      inputNumerosApostar.trim() === '' &&
+      inputQuantidadeJogos.trim() === ''
+    );
+  }, [inputNumerosApostar, inputQuantidadeJogos]);
 
   const gerarApostas = async () => {
     if ( numerosApostar >= 15 && numerosApostar <= 18 && quantidadeJogos >= 1 && quantidadeJogos <= 5 ) {
@@ -142,6 +155,7 @@ export function Loto() {
     setHideJogosButtons(false);
     setNumerosApostarError(''); // Adicione esta linha para remover a mensagem de erro
     setQuantidadeJogosError(''); // Adicione esta linha para remover a mensagem de erro
+    setHasNumerosGerados(false);
   };
 
   useEffect( () => {
@@ -201,6 +215,7 @@ export function Loto() {
           >
             {isLoading ? <span>Gerando...</span> : <><Play size={20} />Gerar números</>}
           </Button>
+          {hasNumerosGerados && !isInputsEmpty && (
           <ButtonClean
             title='Limpar'
             onClick={limpar}
@@ -208,6 +223,7 @@ export function Loto() {
           >
             <Broom size={20} />Apagar
           </ButtonClean>
+          )}
         </FormContainerJ>
       </HomeForm>
 
