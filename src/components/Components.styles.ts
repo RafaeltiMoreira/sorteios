@@ -77,7 +77,7 @@ export const FormContainerJ = styled.div`
 
 export const Button = styled.button`
   background-color: ${( { theme } ) => theme["green-700"]};
-  color: #fff;
+  color: ${( { theme } ) => theme["white"]};
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -102,7 +102,7 @@ export const Button = styled.button`
 
 export const ButtonClean = styled.button`
   background-color: ${( { theme } ) => theme["red-700"]};
-  color: #fff;
+  color: ${( { theme } ) => theme["white"]};
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -177,4 +177,35 @@ export const NumberInput = styled.input`
 export const SpanAlert = styled.span`
     font-weight: bold;
     color: ${( { theme } ) => theme["red"]};
+`;
+
+export const NumberGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+`;
+
+interface NumberButtonProps {
+  isSelected: boolean;
+  onClick: () => void;
+};
+
+export const NumberButton = styled.button<NumberButtonProps>`
+background-color: ${(props) => props.isSelected ? props.theme['green-500'] : props.theme['gray-100']};
+color: ${(props) => props.isSelected ? props.theme['gray-100'] : props.theme['gray-700']};
+font-weight: bold;
+font-size: 1.25rem;
+border: none;
+border-radius: 50%;
+width: 3rem;
+height: 3rem;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+
+&:hover {
+  background-color: ${( { theme } ) => theme["green-500"]};
+  color: ${( { theme } ) => theme["gray-100"]};
+}
 `;

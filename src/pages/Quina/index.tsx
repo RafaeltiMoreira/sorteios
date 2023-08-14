@@ -149,8 +149,8 @@ export function Quina() {
     setNumerosApostar( 5 );
     setQuantidadeJogos( 1 );
     setHideJogosButtons( false );
-    setNumerosApostarError( '' ); // Adicione esta linha para remover a mensagem de erro
-    setQuantidadeJogosError( '' ); // Adicione esta linha para remover a mensagem de erro
+    setNumerosApostarError( '' ); // Remover a mensagem de erro
+    setQuantidadeJogosError( '' ); // Remover a mensagem de erro
     setHasNumerosGerados( false );
   };
 

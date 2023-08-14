@@ -26,9 +26,8 @@ export const defaultTheme = {
 
     'primaryColor': 'rgb(154, 65, 222)',
     'secondaryColor': 'black',
-    'textColor': 'white',
-
-}
+    'textColor': 'white'
+} as const;
 
 
 

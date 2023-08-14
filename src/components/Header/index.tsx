@@ -29,6 +29,10 @@ export function Header() {
         <NavLink to="/quina">
           Quina
         </NavLink>
+
+        <NavLink to="/cartela">
+          Cartela
+        </NavLink>
       </nav>
     </HeaderContainer>
   )

@@ -92,7 +92,7 @@ export function Loto() {
       setHideJogosButtons( false ); // Mostra os botões novamente
     } else {
       setInputNumerosApostar( event.target.value );
-      setNumerosApostarError( 'Digite um número entre 6 e 15' );
+      setNumerosApostarError( 'Digite um número entre 15 e 18' );
       setHideJogosButtons( true ); // Oculta os botões
 
       // Limpa os números gerados
@@ -149,8 +149,8 @@ export function Loto() {
     setNumerosApostar( 15 );
     setQuantidadeJogos( 1 );
     setHideJogosButtons( false );
-    setNumerosApostarError( '' ); // Adicione esta linha para remover a mensagem de erro
-    setQuantidadeJogosError( '' ); // Adicione esta linha para remover a mensagem de erro
+    setNumerosApostarError( '' ); // Remover a mensagem de erro
+    setQuantidadeJogosError( '' ); // Remover a mensagem de erro
     setHasNumerosGerados( false );
   };
 
