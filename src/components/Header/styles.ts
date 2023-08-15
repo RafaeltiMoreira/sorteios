@@ -22,6 +22,7 @@ export const HeaderContainer = styled.header`
             display: flex;
             align-items: center;
             justify-content: center;
+            margin-bottom: 5px;
 
             font-weight: bold;
             padding: 0 0.5rem;
@@ -64,6 +65,38 @@ export const HeaderContainer = styled.header`
 
         img {
             display: inline-block;
+        }
+
+        
+
+        .submenu {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .submenu-arrow {
+            margin-left: 5px;
+            transform: rotate(0deg);
+            transition: transform 0.3s ease-in-out;
+
+        &.open {
+            transform: rotate(180deg);
+            }
+        }
+
+        .submenu-title {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .submenu-content {
+            display: none;
+            position: absolute;
+        }
+
+        .submenu.open .submenu-content {
+            display: block;
         }
     }
 `;

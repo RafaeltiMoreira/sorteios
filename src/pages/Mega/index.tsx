@@ -26,7 +26,7 @@ export function Mega() {
   const [isLoading, setIsLoading] = useState( false );
 
   useEffect( () => {
-    const isNumerosApostarValid = numerosApostar >= 6 && numerosApostar <= 15;
+    const isNumerosApostarValid = numerosApostar >= 6 && numerosApostar <= 20;
     const isQuantidadeJogosValid = quantidadeJogos >= 1 && quantidadeJogos <= 5;
 
     setHideJogosButtons( !( isNumerosApostarValid && isQuantidadeJogosValid ) );
@@ -44,7 +44,7 @@ export function Mega() {
   }, [inputNumerosApostar, inputQuantidadeJogos] );
 
   const gerarApostas = async () => {
-    if ( numerosApostar >= 6 && numerosApostar <= 15 && quantidadeJogos >= 1 && quantidadeJogos <= 5 ) {
+    if ( numerosApostar >= 6 && numerosApostar <= 20 && quantidadeJogos >= 1 && quantidadeJogos <= 5 ) {
       setIsLoading( true );
       // Tempo para simular o carregamento
       await new Promise( ( resolve ) => setTimeout( resolve, 1300 ) );
@@ -84,14 +84,14 @@ export function Mega() {
   const handleNumerosApostarChange = ( event: React.ChangeEvent<HTMLInputElement> ) => {
     const value = parseInt( event.target.value );
 
-    if ( value >= 6 && value <= 15 ) {
+    if ( value >= 6 && value <= 20 ) {
       setNumerosApostar( value );
       setInputNumerosApostar( event.target.value );
       setNumerosApostarError( '' );
       setHideJogosButtons( false ); // Mostra os botões novamente
     } else {
       setInputNumerosApostar( event.target.value );
-      setNumerosApostarError( 'Digite um número entre 6 e 15' );
+      setNumerosApostarError( 'Digite um número entre 6 e 20' );
       setHideJogosButtons( true ); // Oculta os botões
 
       // Limpa os números gerados
@@ -164,12 +164,12 @@ export function Mega() {
       <HomeForm>
         <FormContainerJ>
           <FormContainer>
-            <label htmlFor="numerosApostar">Números de 6 a 15:</label>
+            <label htmlFor="numerosApostar">Números de 6 a 20:</label>
             <NumberInput
               type="number"
               id="numerosApostar"
               min={6}
-              max={15}
+              max={20}
               value={inputNumerosApostar}
               onChange={handleNumerosApostarChange}
               onKeyDown={handleNumerosApostarKeyPress}
@@ -177,8 +177,8 @@ export function Mega() {
             {inputNumerosApostar !== '' && (
               <>
                 {numerosApostarError && <SpanAlert>{numerosApostarError}</SpanAlert>}
-                {!numerosApostarError && ( parseInt( inputNumerosApostar ) < 6 || parseInt( inputNumerosApostar ) > 15 ) && (
-                  <SpanAlert>Digite números entre 6 e 15</SpanAlert>
+                {!numerosApostarError && ( parseInt( inputNumerosApostar ) < 6 || parseInt( inputNumerosApostar ) > 20 ) && (
+                  <SpanAlert>Digite números entre 6 e 20</SpanAlert>
                 )}
               </>
             )}

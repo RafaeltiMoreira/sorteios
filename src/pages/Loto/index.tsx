@@ -26,7 +26,7 @@ export function Loto() {
   const [isLoading, setIsLoading] = useState( false );
 
   useEffect( () => {
-    const isNumerosApostarValid = numerosApostar >= 15 && numerosApostar <= 18;
+    const isNumerosApostarValid = numerosApostar >= 15 && numerosApostar <= 20;
     const isQuantidadeJogosValid = quantidadeJogos >= 1 && quantidadeJogos <= 5;
 
     setHideJogosButtons( !( isNumerosApostarValid && isQuantidadeJogosValid ) );
@@ -44,7 +44,7 @@ export function Loto() {
   }, [inputNumerosApostar, inputQuantidadeJogos] );
 
   const gerarApostas = async () => {
-    if ( numerosApostar >= 15 && numerosApostar <= 18 && quantidadeJogos >= 1 && quantidadeJogos <= 5 ) {
+    if ( numerosApostar >= 15 && numerosApostar <= 20 && quantidadeJogos >= 1 && quantidadeJogos <= 5 ) {
       setIsLoading( true );
 
       // Tempo para simular o carregamento
@@ -85,14 +85,14 @@ export function Loto() {
   const handleNumerosApostarChange = ( event: React.ChangeEvent<HTMLInputElement> ) => {
     const value = parseInt( event.target.value );
 
-    if ( value >= 15 && value <= 18 ) {
+    if ( value >= 15 && value <= 20 ) {
       setNumerosApostar( value );
       setInputNumerosApostar( event.target.value );
       setNumerosApostarError( '' );
       setHideJogosButtons( false ); // Mostra os botões novamente
     } else {
       setInputNumerosApostar( event.target.value );
-      setNumerosApostarError( 'Digite um número entre 15 e 18' );
+      setNumerosApostarError( 'Digite um número entre 15 e 20' );
       setHideJogosButtons( true ); // Oculta os botões
 
       // Limpa os números gerados
@@ -165,12 +165,12 @@ export function Loto() {
       <HomeForm>
         <FormContainerJ>
           <FormContainer>
-            <label htmlFor="numerosApostar">Números de 15 a 18:</label>
+            <label htmlFor="numerosApostar">Números de 15 a 20:</label>
             <NumberInput
               type="number"
               id="numerosApostar"
               min={15}
-              max={18}
+              max={20}
               value={inputNumerosApostar}
               onChange={handleNumerosApostarChange}
               onKeyDown={handleNumerosApostarKeyPress}
@@ -178,8 +178,8 @@ export function Loto() {
             {inputNumerosApostar !== '' && (
               <>
                 {numerosApostarError && <SpanAlert>{numerosApostarError}</SpanAlert>}
-                {!numerosApostarError && ( parseInt( inputNumerosApostar ) < 15 || parseInt( inputNumerosApostar ) > 18 ) && (
-                  <SpanAlert>Digite números entre 15 e 18</SpanAlert>
+                {!numerosApostarError && ( parseInt( inputNumerosApostar ) < 15 || parseInt( inputNumerosApostar ) > 20 ) && (
+                  <SpanAlert>Digite números entre 15 e 20</SpanAlert>
                 )}
               </>
             )}

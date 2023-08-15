@@ -15,7 +15,7 @@ import {
 } from '../../components/Components.styles';
 
 
-export function Cartela() {
+export function CartelaLoto() {
   const [selectedNumbers, setSelectedNumbers] = useState<number[]>( [] );
   const [sortedNumbers, setSortedNumbers] = useState<number[]>( [] );
   const [numerosApostar, setNumerosApostar] = useState( 15 );
@@ -27,7 +27,7 @@ export function Cartela() {
   const [isLoading, setIsLoading] = useState( false );
 
   useEffect( () => {
-    const isNumerosApostarValid = numerosApostar >= 15 && numerosApostar <= 18;
+    const isNumerosApostarValid = numerosApostar >= 15 && numerosApostar <= 20;
     setHideJogosButtons( !isNumerosApostarValid );
   }, [numerosApostar] );
 
@@ -75,14 +75,14 @@ export function Cartela() {
   const handleNumerosApostarChange = ( event: React.ChangeEvent<HTMLInputElement> ) => {
     const value = parseInt( event.target.value );
 
-    if ( value >= 15 && value <= 18 ) {
+    if ( value >= 15 && value <= 20 ) {
       setNumerosApostar( value );
       setInputNumerosApostar( event.target.value );
       setNumerosApostarError( '' );
       setHideJogosButtons( false );
     } else {
       setInputNumerosApostar( event.target.value );
-      setNumerosApostarError( 'Escolha números entre 15 e 18' );
+      setNumerosApostarError( 'Escolha números entre 15 e 20' );
       setHideJogosButtons( true );
       setSortedNumbers( [] );
     }
@@ -108,7 +108,7 @@ export function Cartela() {
             type="number"
             id="numerosApostar"
             min={15}
-            max={18}
+            max={20}
             value={inputNumerosApostar}
             onChange={handleNumerosApostarChange}
           />
@@ -152,62 +152,3 @@ export function Cartela() {
     </HomeContainer>
   );
 }
-
-/*
-  
-
-  return (
-    <HomeContainer>
-      <h2>Cartela</h2>
-      <HomeForm>
-        <FormContainerJ>
-          <FormContainer>
-            <label>Selecione até 25 números:</label>
-            <div>
-              {Array.from({ length: 25 }, (_, index) => (
-                <NumberInput
-                  key={index}
-                  className={selectedNumbers.includes(index + 1) ? 'selected' : ''}
-                  onClick={() => handleNumberClick(index + 1)}
-                >
-                  {index + 1}
-                </NumberInput>
-              ))}
-            </div>
-          </FormContainer>
-          <FormContainer>
-            <label>Quantidade de Números a Sortear:</label>
-            <select value={selectedCount.toString()} onChange={handleSelectedCountChange}>
-              {Array.from({ length: 4 }, (_, index) => (
-                <option key={index} value={15 + index}>
-                  {15 + index}
-                </option>
-              ))}
-            </select>
-          </FormContainer>
-          <Button onClick={generateRandomNumbers} disabled={isGenerating}>
-            {isGenerating ? <span>Gerando...</span> : <><Play size={20} />Sortear números</>}
-          </Button>
-          {selectedNumbers.length > 0 && (
-            <ButtonClean title="Limpar" onClick={clearSelection}>
-              <Broom size={20} />Apagar
-            </ButtonClean>
-          )}
-        </FormContainerJ>
-      </HomeForm>
-
-      {selectedNumbers.length > 0 && (
-        <FormContainer>
-          <h3>Números Sorteados:</h3>
-          <div>
-            {selectedNumbers.map((number, index) => (
-              <NumberInput key={index}>
-                {number}
-              </NumberInput>
-            ))}
-          </div>
-        </FormContainer>
-      )}
-    </HomeContainer>
-  );
-};*/
