@@ -9,13 +9,13 @@ export const HomeContainer = styled.main`
     align-items: center;
     justify-content: center;
 
-    @media (max-width: 576px) {
-        font-size: 0.88;
-    }
-
     @media (max-width: 768px) {
         font-size: 0.9rem; 
         margin-top: 60px;
+    }
+    
+    @media (max-width: 576px) {
+        font-size: 0.88;
     }
 
     h2 {

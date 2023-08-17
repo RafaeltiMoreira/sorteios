@@ -160,7 +160,7 @@ export function Mega() {
 
   return (
     <HomeContainer>
-      <h2>Simulação Mega sena</h2>
+      <h2>Simulação Mega-sena 🍀</h2>
       <HomeForm>
         <FormContainerJ>
           <FormContainer>

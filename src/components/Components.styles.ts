@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const HomeContainer = styled.main`
   flex: 1;
-  padding: 3.5rem;
+  padding: 0.5rem;
+  margin-top: 120px;
   display: flex;
   flex-direction: column;
 
@@ -18,6 +19,7 @@ export const HomeContainer = styled.main`
     font-size: 1.5rem;
     color: ${( { theme } ) => theme["gray-100"]};
     margin-bottom: 120px;
+    text-align: center;
 
     @media (max-width: 768px) {
       font-size: 1.2rem;
@@ -145,6 +147,7 @@ export const NumerosSorteados = styled.span`
   @media (max-width: 392px) {
     font-size: 0.8rem;
     width: 2rem;
+    height: 2rem;
   }
 `;
 
@@ -179,10 +182,36 @@ export const SpanAlert = styled.span`
     color: ${( { theme } ) => theme["red"]};
 `;
 
-export const NumberGrid = styled.div`
+export const NumberGridLoto = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 1rem;
+
+  @media (max-width: 768px) {
+    gap: 0.5rem;
+  }
+`;
+
+export const NumberGridMega = styled.div`
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 1rem;
+
+  @media (max-width: 798px) {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+  }
+`;
+
+export const NumberGridQuina = styled.div`
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 1rem;
+
+  @media (max-width: 798px) {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+  }
 `;
 
 interface NumberButtonProps {
@@ -204,8 +233,13 @@ align-items: center;
 justify-content: center;
 cursor: pointer;
 
-&:hover {
+/*&:hover {
   background-color: ${( { theme } ) => theme["green-500"]};
   color: ${( { theme } ) => theme["gray-100"]};
-}
+}*/
+@media (max-width: 392px) {
+    font-size: 0.9rem;
+    width: 2rem;
+    height: 2rem;
+  }
 `;

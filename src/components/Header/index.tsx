@@ -5,77 +5,60 @@ import { HeaderContainer } from "./styles";
 import logoX from "../../assets/x-logo.png";
 
 export function Header() {
-  const [submenuOpenM, setSubmenuOpenM] = useState( false );
-  const [submenuOpenL, setSubmenuOpenL] = useState( false );
-  const [submenuOpenQ, setSubmenuOpenQ] = useState( false );
+  const [submenus, setSubmenus] = useState( [
+    { open: false },
+    { open: false },
+    { open: false },
+  ] );
 
-  const toggleSubmenuM = () => {
-    setSubmenuOpenM( !submenuOpenM );
-  };
-
-  const toggleSubmenuL = () => {
-    setSubmenuOpenL( !submenuOpenL );
-  };
-
-  const toggleSubmenuQ = () => {
-    setSubmenuOpenQ( !submenuOpenQ );
+  const toggleSubmenu = ( index: number ) => {
+    const updatedSubmenus = submenus.map( ( submenu, i ) => {
+      if ( i === index ) {
+        return { open: !submenu.open };
+      }
+      return { open: false };
+    } );
+    setSubmenus( updatedSubmenus );
   };
 
   return (
     <HeaderContainer>
-      <NavLink to="/" title="Início">
-        <div>
-          <img src={logoX} alt="Logo da letra X" />
-        </div>
-      </NavLink>
-
       <nav>
-        <NavLink to="/">
-          Início
+        <NavLink style={{ borderColor: "transparent" }} to="/" title="Início">
+          <div>
+            <img src={logoX} alt="Logo da letra X" />
+          </div>
         </NavLink>
 
-        <div
-          className={`submenu ${submenuOpenM ? "open" : ""}`}
-          onClick={toggleSubmenuM}
-        >
-          <span className="submenu-title">
-            <a>Mega-sena 🍀<span className={`submenu-arrow ${submenuOpenM ? "open" : ""}`}>▼
-            </span></a>
-          </span>
-          <div className="submenu-content">
-            <NavLink to="/mega">Simular 🍀</NavLink>
-            <NavLink to="/cartela-mega">Cartela 🍀</NavLink>
-          </div>
-        </div>
+        <NavLink to="/">Início</NavLink>
 
-        <div
-          className={`submenu ${submenuOpenL ? "open" : ""}`}
-          onClick={toggleSubmenuL}
-        >
-          <span className="submenu-title">
-            <a>Lotofácil 🍀<span className={`submenu-arrow ${submenuOpenL ? "open" : ""}`}>▼
-            </span></a>
-          </span>
-          <div className="submenu-content">
-            <NavLink to="/loto">Simular 🍀</NavLink>
-            <NavLink to="/cartela-loto">Cartela 🍀</NavLink>
+        {submenus.map( ( submenu, index ) => (
+          <div
+            key={index}
+            className={`submenu ${submenu.open ? "open" : ""}`}
+            onClick={() => toggleSubmenu( index )}
+          >
+            <span className="submenu-title">
+              <a>
+                {index === 0 && "Mega"}
+                {index === 1 && "Lotofácil"}
+                {index === 2 && "Quina"}
+                <span className={`submenu-arrow ${submenu.open ? "open" : ""}`}>
+                  ▼
+                </span>
+              </a>
+            </span>
+            <div className="submenu-content">
+              <NavLink to={`/${index === 0 ? "mega" : index === 1 ? "loto" : "quina"}`}>
+                Simular
+              </NavLink>
+              <NavLink to={`/cartela-${index === 0 ? "mega" : index === 1 ? "loto" : "quina"}`}>
+                Cartela
+              </NavLink>
+            </div>
           </div>
-        </div>
-
-        <div
-          className={`submenu ${submenuOpenQ ? "open" : ""}`}
-          onClick={toggleSubmenuQ}
-        >
-          <span className="submenu-title">
-            <a>Quina 🍀<span className={`submenu-arrow ${submenuOpenQ ? "open" : ""}`}>▼
-            </span></a>
-          </span>
-          <div className="submenu-content">
-            <NavLink to="/quina">Simular 🍀</NavLink>
-            <NavLink to="/cartela-quina">Cartela 🍀</NavLink>
-          </div>
-        </div>
+        ) )}
       </nav>
     </HeaderContainer>
-  )
+  );
 }

@@ -161,7 +161,7 @@ export function Quina() {
 
   return (
     <HomeContainer>
-      <h2>Simulação Quina</h2>
+      <h2>Simulação Quina 🍀</h2>
       <HomeForm>
         <FormContainerJ>
           <FormContainer>

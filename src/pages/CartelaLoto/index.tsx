@@ -6,7 +6,7 @@ import {
   NumberInput,
   HomeContainer,
   HomeForm,
-  NumberGrid,
+  NumberGridLoto,
   NumberButton,
   FormContainer,
   FormContainerJ,
@@ -100,7 +100,7 @@ export function CartelaLoto() {
 
   return (
     <HomeContainer>
-      <h2>Cartela Lotofácil</h2>
+      <h2>Cartela Lotofácil 🍀</h2>
       <HomeForm>
         <FormContainer>
 
@@ -115,7 +115,7 @@ export function CartelaLoto() {
           {numerosApostarError && <SpanAlert>{numerosApostarError}</SpanAlert>}
           <label htmlFor="numerosApostar"> para sortear.</label>
         </FormContainer>
-        <NumberGrid>
+        <NumberGridLoto>
           {Array.from( { length: 25 }, ( _, i ) => i + 1 ).map( ( number ) => (
             <NumberButton
               key={number}
@@ -125,7 +125,7 @@ export function CartelaLoto() {
               {number}
             </NumberButton>
           ) )}
-        </NumberGrid>
+        </NumberGridLoto>
         <FormContainerJ>
           <Button onClick={handleSortNumbers} disabled={selectedNumbers.length < numerosApostar || isLoading}
             className={hideJogosButtons ? 'hidden' : ''}

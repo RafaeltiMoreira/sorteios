@@ -161,7 +161,7 @@ export function Loto() {
 
   return (
     <HomeContainer>
-      <h2>Simulação Lotofácil</h2>
+      <h2>Simulação Lotofácil 🍀</h2>
       <HomeForm>
         <FormContainerJ>
           <FormContainer>

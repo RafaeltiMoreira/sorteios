@@ -6,12 +6,12 @@ import {
   NumberInput,
   HomeContainer,
   HomeForm,
-  NumberGrid,
   NumberButton,
   FormContainer,
   FormContainerJ,
   NumerosSorteados,
   SpanAlert,
+  NumberGridQuina,
 } from '../../components/Components.styles';
 
 
@@ -100,7 +100,7 @@ export function CartelaQuina() {
 
   return (
     <HomeContainer>
-      <h2>Cartela Quina</h2>
+      <h2>Cartela Quina 🍀</h2>
       <HomeForm>
         <FormContainer>
 
@@ -115,7 +115,7 @@ export function CartelaQuina() {
           {numerosApostarError && <SpanAlert>{numerosApostarError}</SpanAlert>}
           <label htmlFor="numerosApostar"> para sortear.</label>
         </FormContainer>
-        <NumberGrid>
+        <NumberGridQuina>
           {Array.from( { length: 80 }, ( _, i ) => i + 1 ).map( ( number ) => (
             <NumberButton
               key={number}
@@ -125,7 +125,7 @@ export function CartelaQuina() {
               {number}
             </NumberButton>
           ) )}
-        </NumberGrid>
+        </NumberGridQuina>
         <FormContainerJ>
           <Button onClick={handleSortNumbers} disabled={selectedNumbers.length < numerosApostar || isLoading}
             className={hideJogosButtons ? 'hidden' : ''}
