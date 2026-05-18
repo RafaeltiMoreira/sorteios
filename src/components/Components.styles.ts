@@ -217,7 +217,7 @@ export const NumberGridQuina = styled.div`
 interface NumberButtonProps {
   isSelected: boolean;
   onClick: () => void;
-};
+}
 
 export const NumberButton = styled.button<NumberButtonProps>`
 background-color: ${(props) => props.isSelected ? props.theme['green-500'] : props.theme['gray-100']};
